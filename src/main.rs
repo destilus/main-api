@@ -1,13 +1,18 @@
 #[macro_use]
 extern crate rocket;
-use rocket::fs::FileServer;
-// use rocket::http::Status;
-// use rocket::outcome::Outcome;
-// use rocket::request::{self, FromRequest, Request};
+// use rocket::fs::FileServer;
 use rocket::tokio::time::{sleep, Duration};
+use std::env;
 
 mod api_key;
 use api_key::ApiKey;
+
+#[get("/")]
+fn index() -> String {
+    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    format!("db url is: {}", db_url)
+}
+
 #[get("/quick")]
 fn quick_hello(api_key: ApiKey) -> String {
     let value = api_key;
@@ -82,10 +87,17 @@ fn rocket() -> _ {
     rocket::build()
         .mount(
             "/hello",
-            routes![quick_hello, long_hello, dynamic, dynamic_int, foo_bar],
+            routes![
+                index,
+                quick_hello,
+                long_hello,
+                dynamic,
+                dynamic_int,
+                foo_bar
+            ],
         )
         .mount("/time", routes![delay])
         .mount("/blocking", routes![blocking_task])
         .mount("/default", routes![get_page])
-        .mount("/public", FileServer::from("static/")) // static server
+    // .mount("/public", FileServer::from("static/")) // static server
 }
