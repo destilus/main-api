@@ -1,0 +1,44 @@
+version: "3.4"
+services:
+  filter_api_dev:
+    container_name: "filter_api_dev"
+    command: cargo watch -x 'run --bin main-api'
+    build:
+      context: .
+      dockerfile: "Dockerfile.dev"
+      cache_from:
+        - rust:1.57.0
+    links:
+      - "postgres"
+    depends_on:
+      - "postgres"
+    environment:
+      - DATABASE_URL=postgres://docker:docker@postgres:5432/docker
+    networks:
+      - filter_net
+    volumes:
+      - ./:/app
+    tty: true
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: postgres:alpine
+    volumes:
+      - pg_rocket:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "docker"
+      POSTGRES_PASSWORD: "docker"
+      PGPASSWORD: "docker"
+    networks:
+      - filter_net
+    ports:
+      - "5433:5432"
+
+networks:
+  filter_net:
+    driver: bridge
+
+volumes:
+  pg_rocket:
+    driver: local
