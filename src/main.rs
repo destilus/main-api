@@ -10,7 +10,7 @@ use api_key::ApiKey;
 #[get("/")]
 fn index() -> String {
     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    format!("db url is: {}", db_url)
+    format!("db url is what is: {}", db_url)
 }
 
 #[get("/quick")]
@@ -85,16 +85,10 @@ async fn blocking_task() -> io::Result<Vec<u8>> {
 #[launch]
 fn rocket() -> _ {
     rocket::build()
+        .mount("/", routes![index,])
         .mount(
             "/hello",
-            routes![
-                index,
-                quick_hello,
-                long_hello,
-                dynamic,
-                dynamic_int,
-                foo_bar
-            ],
+            routes![quick_hello, long_hello, dynamic, dynamic_int, foo_bar],
         )
         .mount("/time", routes![delay])
         .mount("/blocking", routes![blocking_task])
