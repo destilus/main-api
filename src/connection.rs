@@ -34,6 +34,7 @@ impl<'r> FromRequest<'r> for DbConn {
 
     async fn from_request(request: &'r Request<'_>) -> request::Outcome<Self, Self::Error> {
         let pool = request.rocket().state::<Pool>().unwrap();
+        // let outcome = request.guard::<&rocket::State<Pool>>().await;
         match pool.get() {
             Ok(conn) => Outcome::Success(DbConn(conn)),
             Err(_) => {
