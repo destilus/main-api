@@ -1,21 +1,32 @@
 #[macro_use]
 extern crate rocket;
-// use rocket::fs::FileServer;
-use rocket::tokio::time::{sleep, Duration};
-use std::env;
+extern crate diesel;
+extern crate dotenv;
+extern crate r2d2;
+extern crate r2d2_diesel;
+
+// use crate::schema::posts;
 
 mod api_key;
+mod connection;
+
 use api_key::ApiKey;
+use dotenv::dotenv;
+// use rocket::http::Status;
+use crate::connection::DbConn;
+use rocket::tokio::time::{sleep, Duration};
+
+// use crate::models::Post;
 
 #[get("/")]
 fn index() -> String {
     "Hello index changed".to_string()
 }
 
-#[get("/db")]
-fn db() -> String {
-    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    format!("db url is what is you know: {}", db_url)
+#[get("/posts")]
+pub fn all_posts(connection: DbConn) -> String {
+    // repository::get_post_title(&connection)
+    String::from("posts")
 }
 
 #[get("/quick")]
@@ -87,10 +98,12 @@ async fn blocking_task() -> io::Result<Vec<u8>> {
     Ok(vec)
 }
 
-#[launch]
-fn rocket() -> _ {
+#[rocket::main]
+async fn main() {
+    dotenv().ok();
     rocket::build()
-        .mount("/", routes![index, db])
+        .manage(connection::get_pool())
+        .mount("/", routes![index, all_posts])
         .mount(
             "/hello",
             routes![quick_hello, long_hello, dynamic, dynamic_int, foo_bar],
@@ -98,5 +111,7 @@ fn rocket() -> _ {
         .mount("/time", routes![delay])
         .mount("/blocking", routes![blocking_task])
         .mount("/default", routes![get_page])
-    // .mount("/public", FileServer::from("static/")) // static server
+        .launch()
+        .await
+        .ok();
 }
