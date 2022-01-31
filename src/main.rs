@@ -1,14 +1,18 @@
-#[macro_use]
-extern crate rocket;
 extern crate diesel;
 extern crate dotenv;
 extern crate r2d2;
 extern crate r2d2_diesel;
+#[macro_use]
+extern crate rocket;
+// extern crate rocket_contrib;
+extern crate serde_derive;
 
 // use crate::schema::posts;
 
 mod api_key;
 mod connection;
+// mod models;
+// mod sample;
 
 use api_key::ApiKey;
 use dotenv::dotenv;
@@ -16,7 +20,10 @@ use dotenv::dotenv;
 use crate::connection::DbConn;
 use rocket::tokio::time::{sleep, Duration};
 
-// use crate::models::Post;
+// use crate::connection::DbConn;
+// use crate::sample;
+// use crate::sample::model::Post;
+// use crate::sample::model::NewPost;
 
 #[get("/")]
 fn index() -> String {
@@ -24,7 +31,7 @@ fn index() -> String {
 }
 
 #[get("/posts")]
-pub fn all_posts(connection: DbConn) -> String {
+pub fn all_posts(_connection: DbConn) -> String {
     // repository::get_post_title(&connection)
     String::from("posts")
 }
