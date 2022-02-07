@@ -8,7 +8,14 @@ pub async fn create_routes() {
         .manage(connection::get_pool())
         .mount(
             "/",
-            routes![sample::handler::all_posts, sample::handler::create_post],
+            routes![
+                sample::handler::all_posts,
+                sample::handler::count_posts,
+                sample::handler::create_post,
+                sample::handler::update_post,
+                sample::handler::get_post,
+                sample::handler::delete_post
+            ],
         )
         .launch()
         .await

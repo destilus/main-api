@@ -1,14 +1,36 @@
-GET http://localhost:8000/
+GET http://localhost:8000/posts
 
 
 ###
+# @name newPost
 POST http://localhost:8000/posts
 Content-Type: application/json
 
 {
-    "title": "Homelander",
-    "body": "Story of a man who tries to find his own land"
+    "title": "Lord of the rings",
+    "body": "A true story about power"
 }
+
+###
+@addedPostId={{newPost.response.body.$.id}}
+GET http://localhost:8000/posts/{{addedPostId}}
+
+###
+PUT http://localhost:8000/posts/1
+Content-Type: application/json
+
+{
+    "id":1,
+    "title": "My first title",
+    "body": "Story of a man who tries to find his own land",
+    "published": true
+
+}
+
+###
+DELETE http://localhost:8000/posts/4
+
+
 
 ###
 GET http://localhost:8000/rainer
