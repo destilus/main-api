@@ -11,7 +11,7 @@ use crate::schema::posts::dsl::*;
 
 pub fn show_posts(connection: &PgConnection) -> QueryResult<Vec<Post>> {
     //posts.filter(published.eq(true))
-    posts.limit(5).load::<Post>(&*connection)
+    posts.load::<Post>(&*connection)
 }
 
 pub fn count_posts(connection: &PgConnection) -> String {
