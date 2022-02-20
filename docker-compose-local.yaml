@@ -4,6 +4,7 @@ services:
     image: postgres:alpine
     volumes:
       - pg_rocket:/var/lib/postgresql/data
+      - ./sql/init_postgres.sql:/docker-entrypoint-initdb.d/init_postgres.sql
     environment:
       POSTGRES_USER: "docker"
       POSTGRES_PASSWORD: "docker"

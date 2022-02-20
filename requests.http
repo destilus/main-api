@@ -7,8 +7,8 @@ POST http://localhost:8000/posts
 Content-Type: application/json
 
 {
-    "title": "Spider man 2",
-    "body": "A funny guy becomes more depressing in the movies"
+    "title": "Moses",
+    "body": "A guy who will become a king becomes a slave and than a king again"
 }
 
 ###
