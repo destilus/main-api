@@ -1,4 +1,75 @@
 table! {
+    bets (id) {
+        id -> Uuid,
+        creator_id -> Uuid,
+        title -> Varchar,
+        summary -> Nullable<Varchar>,
+        curr_status -> Varchar,
+        category -> Varchar,
+        bids_limit_date -> Timestamp,
+        result_released_at -> Nullable<Timestamp>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    channels (id) {
+        id -> Uuid,
+        owner_id -> Uuid,
+        title -> Varchar,
+        summary -> Nullable<Varchar>,
+        frequency -> Varchar,
+        exclusivity -> Varchar,
+        subscription_price -> Nullable<Numeric>,
+        price_currency -> Nullable<Varchar>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    curatorship_items (id) {
+        id -> Uuid,
+        curatorship_id -> Uuid,
+        priority_order -> Int2,
+        external_ref -> Nullable<Varchar>,
+        title -> Varchar,
+        subtitle -> Nullable<Varchar>,
+        hero_image_url -> Nullable<Varchar>,
+        body -> Text,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    curatorships (id) {
+        id -> Uuid,
+        curator_id -> Uuid,
+        defied_curatorship_id -> Uuid,
+        channel_id -> Uuid,
+        curator_bet_id -> Nullable<Uuid>,
+        title -> Varchar,
+        subtitle -> Nullable<Varchar>,
+        hero_image_url -> Varchar,
+        body -> Nullable<Text>,
+        curr_status -> Varchar,
+        category -> Varchar,
+        frequency -> Varchar,
+        exclusivity -> Varchar,
+        single_price -> Nullable<Numeric>,
+        price_currency -> Nullable<Varchar>,
+        previews_count -> Int2,
+        priority_order -> Varchar,
+        verified -> Bool,
+        published_at -> Nullable<Timestamp>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
     posts (id) {
         id -> Int4,
         title -> Varchar,
@@ -18,7 +89,18 @@ table! {
     }
 }
 
+joinable!(bets -> users (creator_id));
+joinable!(channels -> users (owner_id));
+joinable!(curatorship_items -> curatorships (curatorship_id));
+joinable!(curatorships -> bets (curator_bet_id));
+joinable!(curatorships -> channels (channel_id));
+joinable!(curatorships -> users (curator_id));
+
 allow_tables_to_appear_in_same_query!(
+    bets,
+    channels,
+    curatorship_items,
+    curatorships,
     posts,
     users,
 );
