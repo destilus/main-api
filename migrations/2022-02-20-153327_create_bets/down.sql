@@ -1,0 +1,4 @@
+DROP TRIGGER IF EXISTS bets_timestamps 
+ON bets RESTRICT;
+
+DROP TABLE bets;
