@@ -1,13 +1,13 @@
-GET http://localhost:8000/posts
+GET http://localhost:8000/curatorships/posts
 
 
 ###
 # @name newPost
-POST http://localhost:8000/posts
+POST http://localhost:8000/curatorships/posts
 Content-Type: application/json
 
 {
-    "title": "Moses",
+    "title": "Moses2",
     "body": "A guy who will become a king becomes a slave and than a king again"
 }
 

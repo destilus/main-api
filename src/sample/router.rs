@@ -7,7 +7,7 @@ pub async fn create_routes() {
     rocket::build()
         .manage(connection::get_pool())
         .mount(
-            "/",
+            "/sample",
             routes![
                 sample::handler::all_posts,
                 sample::handler::count_posts,
