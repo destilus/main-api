@@ -5,8 +5,12 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+# We set bigdecimal version to the diesel uses (see: cargo tree)
+# and specified features = [serde]  in order to be serializable
+
 [dependencies]
-diesel = { version = "1.4.4", features = ["postgres"] }
+uuid = { version = "0.8.2", features = ["serde", "v4"] }
+diesel = { version = "1.4.5", features = ["chrono", "postgres", "r2d2", "uuidv07", "numeric"] }
 dotenv = "0.15.0"
 r2d2-diesel = "1.0.0"
 r2d2 = "0.8.9"
@@ -15,6 +19,7 @@ serde_derive = "1.0.116"
 serde_json = "1.0.58"
 env_logger = "0.9.0"
 log = "0.4.6"
+bigdecimal = {version = "0.1.2", features = ["serde"]}
 
 [dependencies.rocket]
 version = "0.5.0-rc.1"
