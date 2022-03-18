@@ -47,8 +47,8 @@ table! {
     curatorships (id) {
         id -> Uuid,
         curator_id -> Uuid,
-        defied_curatorship_id -> Uuid,
-        channel_id -> Uuid,
+        defied_curatorship_id -> Nullable<Uuid>,
+        channel_id -> Nullable<Uuid>,
         curator_bet_id -> Nullable<Uuid>,
         title -> Varchar,
         subtitle -> Nullable<Varchar>,

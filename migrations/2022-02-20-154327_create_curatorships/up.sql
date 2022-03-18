@@ -2,8 +2,8 @@ CREATE TABLE curatorships
 (
   id UUID NOT NULL DEFAULT uuid_generate_v4(), 
   curator_id UUID NOT NULL references users(id),
-  defied_curatorship_id UUID NOT NULL references curatorships(id),
-  channel_id UUID NOT NULL references channels(id),
+  defied_curatorship_id UUID NULL references curatorships(id),
+  channel_id UUID NULL references channels(id),
   curator_bet_id UUID NULL references bets(id),
   title VARCHAR(64) NOT NULL,
   subtitle VARCHAR(128) NULL,

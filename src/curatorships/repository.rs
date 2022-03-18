@@ -6,8 +6,14 @@ use diesel::prelude::*;
 use crate::curatorships::model::NewPost;
 use crate::curatorships::model::Post;
 
+use crate::curatorships::model::{Curatorship, NewCuratorship, NewCuratorshipItem};
+
 use crate::schema::posts;
 use crate::schema::posts::dsl::*;
+
+use crate::schema::curatorship_items::dsl::*;
+use crate::schema::curatorships::dsl::*;
+use crate::schema::{curatorship_items, curatorships};
 
 pub fn show_posts(connection: &PgConnection) -> QueryResult<Vec<Post>> {
     //posts.filter(published.eq(true))
@@ -25,9 +31,13 @@ pub fn count_posts(connection: &PgConnection) -> String {
     }
 }
 
-pub fn create_post(new_post: NewPost, conn: &PgConnection) -> QueryResult<Post> {
-    diesel::insert_into(posts::table)
-        .values(&new_post)
+pub fn create_curatorship(
+    new_curatorship: NewCuratorship,
+    new_curatorship_item: NewCuratorshipItem,
+    conn: &PgConnection,
+) -> QueryResult<Curatorship> {
+    diesel::insert_into(curatorships::table)
+        .values(&new_curatorship)
         .get_result(conn)
 }
 

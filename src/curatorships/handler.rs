@@ -9,6 +9,7 @@ use crate::connection::DbConn;
 use crate::curatorships;
 use crate::curatorships::model::NewPost;
 use crate::curatorships::model::Post;
+use crate::curatorships::model::{NewCuratorship, NewCuratorshipDto, NewCuratorshipItem};
 
 #[get("/posts")]
 pub fn all_posts(connection: DbConn) -> Result<Json<Vec<Post>>, Status> {
@@ -25,14 +26,16 @@ pub fn count_posts(connection: DbConn) -> String {
     //     .map_err(|error| error_status(error))
 }
 
-#[post("/posts", format = "application/json", data = "<new_post>")]
-pub fn create_post(
+#[post("/posts", format = "application/json", data = "<new_curatorship_dto>")]
+pub fn create_curatorship(
     connection: DbConn,
-    new_post: Json<NewPost<'_>>,
-) -> Result<status::Created<Json<Post>>, Status> {
-    curatorships::repository::create_post(new_post.into_inner(), &connection)
-        .map(|post| post_created(post))
-        .map_err(|error| error_status(error))
+    new_curatorship_dto: Json<NewCuratorshipDto<'_>>,
+) -> Result<status::Created<Json<String>>, Status> {
+    // curatorships::repository::create_curatorship(new_curatorship_dto.into_inner(), &connection)
+    //     .map(|post| post_created(post))
+    //     .map_err(|error| error_status(error))
+
+    todo!()
 }
 
 #[get("/posts/<id>")]
