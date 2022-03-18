@@ -29,17 +29,17 @@ pub struct Curatorship {
     pub channel_id: Option<Uuid>,
     pub curator_bet_id: Option<Uuid>,
     pub title: String,
-    pub subtitle: Option<String>,
+    pub subtitle: String,
     pub hero_image_url: String,
-    pub body: Option<String>,
+    pub body: String,
     pub curr_status: String,
     pub category: String,
     pub frequency: String,
     pub exclusivity: String,
     pub single_price: Option<BigDecimal>,
-    pub price_currency: Option<String>, // change to enum
+    pub price_currency: String, // change to enum
     pub previews_count: i16,
-    pub priority_order: Option<String>, // change to enum
+    pub priority_order: String, // change to enum
     pub verified: bool,
     pub published_at: Option<SystemTime>,
     pub created_at: SystemTime,
