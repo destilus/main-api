@@ -72,6 +72,7 @@ table! {
 table! {
     posts (id) {
         id -> Int4,
+        curator_id -> Nullable<Uuid>,
         title -> Varchar,
         body -> Text,
         published -> Bool,
@@ -95,6 +96,7 @@ joinable!(curatorship_items -> curatorships (curatorship_id));
 joinable!(curatorships -> bets (curator_bet_id));
 joinable!(curatorships -> channels (channel_id));
 joinable!(curatorships -> users (curator_id));
+joinable!(posts -> users (curator_id));
 
 allow_tables_to_appear_in_same_query!(
     bets,

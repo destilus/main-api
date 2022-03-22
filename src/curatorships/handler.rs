@@ -34,7 +34,8 @@ pub fn create_post(
     connection: DbConn,
     new_post: Json<NewPost<'_>>,
 ) -> Result<status::Created<Json<Post>>, Status> {
-    curatorships::repository::create_post(new_post.into_inner(), &connection)
+    let data = new_post.into_inner();
+    curatorships::repository::create_post(data, &connection)
         .map(|post| post_created(post))
         .map_err(|error| error_status(error))
 }

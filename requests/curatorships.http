@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 
-###
+### curator_id - johel : 3d2c8c50-282c-4dea-a911-c229384bdffa
 # @name newCuratorship
 POST http://localhost:8000/curatorships/curatorships
 Content-Type: application/json
