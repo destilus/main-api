@@ -41,6 +41,12 @@ pub fn create_curatorship(
         .get_result(conn)
 }
 
+pub fn create_post(new_post: NewPost, conn: &PgConnection) -> QueryResult<Post> {
+    diesel::insert_into(posts::table)
+        .values(&new_post)
+        .get_result(conn)
+}
+
 pub fn update_post(post_id: i32, post: Post, connection: &PgConnection) -> QueryResult<Post> {
     diesel::update(posts::table.find(post_id))
         .set(&post)

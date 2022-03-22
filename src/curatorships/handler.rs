@@ -29,8 +29,21 @@ pub fn count_posts(connection: DbConn) -> String {
     //     .map_err(|error| error_status(error))
 }
 
+#[post("/posts", format = "application/json", data = "<new_post>")]
+pub fn create_post(
+    connection: DbConn,
+    new_post: Json<NewPost<'_>>,
+) -> Result<status::Created<Json<Post>>, Status> {
+    curatorships::repository::create_post(new_post.into_inner(), &connection)
+        .map(|post| post_created(post))
+        .map_err(|error| error_status(error))
+}
 
-#[post("/curatorships", format = "application/json", data = "<new_curatorship_dto>")]
+#[post(
+    "/curatorships",
+    format = "application/json",
+    data = "<new_curatorship_dto>"
+)]
 pub fn create_curatorship(
     connection: DbConn,
     new_curatorship_dto: Json<NewCuratorshipDto<'_>>,
@@ -42,8 +55,8 @@ pub fn create_curatorship(
     // let curator_bet_id_temp = None;
     let curator_id_temp = Uuid::parse_str(dto.curator_id).unwrap();
     // let defied_curatorship_id_temp = Uuid::parse_str(dto.defied_curatorship_id).unwrap();
-    let new_curatorship = NewCuratorship{
-        body : dto.metadata.text,
+    let new_curatorship = NewCuratorship {
+        body: dto.metadata.text,
         category: dto.category,
         channel_id: None,
         curator_bet_id: None,
@@ -51,7 +64,7 @@ pub fn create_curatorship(
         curr_status: dto.curr_status,
         defied_curatorship_id: None,
         exclusivity: dto.exclusivity,
-        frequency: dto.frequency, 
+        frequency: dto.frequency,
         hero_image_url: dto.metadata.hero_image,
         previews_count: dto.previews_count,
         price_currency: dto.price_currency,
@@ -59,12 +72,11 @@ pub fn create_curatorship(
         single_price: dto.single_price,
         subtitle: dto.metadata.subtitle.unwrap(),
         title: dto.metadata.title,
-        verified: dto.verified
+        verified: dto.verified,
     };
     curatorships::repository::create_curatorship(new_curatorship, &connection)
-         .map(|curatorship| curatorship_created(curatorship))
-         .map_err(|error| error_status(error))
-
+        .map(|curatorship| curatorship_created(curatorship))
+        .map_err(|error| error_status(error))
 }
 
 #[get("/posts/<id>")]

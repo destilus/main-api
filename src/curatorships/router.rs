@@ -12,6 +12,7 @@ pub async fn create_routes() {
                 curatorships::handler::all_posts,
                 curatorships::handler::count_posts,
                 curatorships::handler::create_curatorship,
+                curatorships::handler::create_post,
                 curatorships::handler::update_post,
                 curatorships::handler::get_post,
                 curatorships::handler::delete_post

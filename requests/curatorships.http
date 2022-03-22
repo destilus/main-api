@@ -1,18 +1,27 @@
 ###
+# @name newPost
+POST http://localhost:8000/curatorships/posts
+Content-Type: application/json
+
+{
+    "title": "Moses2",
+    "body": "A guy who will become a king becomes a slave and than a king again"
+}
+
+
+###
 # @name newCuratorship
 POST http://localhost:8000/curatorships/curatorships
 Content-Type: application/json
 
 {
     "category": "MOVIES",
-    "curator_id": "fc4ffad5-68cc-4641-bd9a-dd228acb7423",
+    "curator_id": "e19de506-71eb-4abf-a6a3-1c080ad72727",
     "curr_status": "DRAFT",
     "exclusivity":"FREE",
     "frequency": "HOUR", 
     "previews_count": 1,
-    "price_currency":"USD",
     "priority_order":"ASC",
-    "single_price": "FREE",
     "verified": false,
     "metadata": {
         "hero_image": "https://via.placeholder.com/150/d32776",
