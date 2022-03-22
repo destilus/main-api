@@ -1,0 +1,24 @@
+###
+# @name newCuratorship
+POST http://localhost:8000/curatorships/curatorships
+Content-Type: application/json
+
+{
+    "category": "MOVIES",
+    "curator_id": "fc4ffad5-68cc-4641-bd9a-dd228acb7423",
+    "curr_status": "DRAFT",
+    "exclusivity":"FREE",
+    "frequency": "HOUR", 
+    "previews_count": 1,
+    "price_currency":"USD",
+    "priority_order":"ASC",
+    "single_price": "FREE",
+    "verified": false,
+    "metadata": {
+        "hero_image": "https://via.placeholder.com/150/d32776",
+        "title": "2022 - Melhores Filmes",
+        "subtitle": "Não pode perder",
+        "text" : "Na minhao opiniao os 10 melhores filmes"
+    },
+    "items": []
+}

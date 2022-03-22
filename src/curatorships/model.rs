@@ -50,8 +50,8 @@ pub struct Curatorship {
 #[table_name = "curatorships"]
 pub struct NewCuratorship<'a> {
     pub curator_id: Uuid,
-    pub defied_curatorship_id: Uuid,
-    pub channel_id: Uuid,
+    pub defied_curatorship_id: Option<Uuid>,
+    pub channel_id: Option<Uuid>,
     pub curator_bet_id: Option<Uuid>,
     pub title: &'a str,
     pub subtitle: &'a str,
@@ -83,14 +83,10 @@ pub struct NewCuratorshipItem<'a> {
 #[derive(Serialize, Deserialize)]
 pub struct NewCuratorshipDto<'a> {
     pub curator_id: &'a str,
-    pub defied_curatorship_id: &'a str,
-    pub channel_id: &'a str,
+    pub defied_curatorship_id: Option<&'a str>,
+    pub channel_id: Option<&'a str>,
     pub curator_bet_id: Option<&'a str>,
     pub metadata: CuratorshipMetadata<'a>,
-    pub title: &'a str,
-    pub subtitle: &'a str,
-    pub hero_image_url: &'a str,
-    pub body: Option<&'a str>,
     pub curr_status: &'a str,
     pub category: &'a str,
     pub frequency: &'a str,

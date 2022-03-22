@@ -14,3 +14,7 @@ CREATE TRIGGER users_timestamps
 BEFORE UPDATE ON users
 FOR EACH ROW
 EXECUTE PROCEDURE set_updated_at();
+
+INSERT INTO public.users
+(id, email, pwd, verified, created_at, updated_at)
+VALUES(uuid_generate_v4(), 'rust@gmail.com', 'rust', false, now(), now());

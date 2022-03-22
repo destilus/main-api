@@ -33,7 +33,7 @@ pub fn count_posts(connection: &PgConnection) -> String {
 
 pub fn create_curatorship(
     new_curatorship: NewCuratorship,
-    new_curatorship_item: NewCuratorshipItem,
+    // new_curatorship_item: NewCuratorshipItem,
     conn: &PgConnection,
 ) -> QueryResult<Curatorship> {
     diesel::insert_into(curatorships::table)
