@@ -30,18 +30,18 @@ pub struct Curatorship {
     pub defied_curatorship_id: Option<Uuid>,
     pub channel_id: Option<Uuid>,
     pub curator_bet_id: Option<Uuid>,
-    // pub title: String,
-    // pub subtitle: String,
-    // pub hero_image_url: String,
+    pub title: String,
+    pub subtitle: String,
+    pub hero_image_url: String,
     pub body: String,
     pub curr_status: String,
     pub category: String,
     pub exclusivity: String,
+    pub priority_order: String, // change to enum
     // pub single_price: Option<BigDecimal>,
-    pub price_currency: String, // change to enum
-    // pub previews_count: i16,
-    pub priority_order: Option<String>, // change to enum
-    // pub verified: bool,
+    pub price_currency: Option<String>, // change to enum
+    pub verified: bool,
+    pub previews_count: i16,
     pub published_at: Option<SystemTime>,
     pub created_at: SystemTime,
     pub updated_at: SystemTime,
@@ -54,18 +54,19 @@ pub struct NewCuratorship<'a> {
     pub defied_curatorship_id: Option<Uuid>,
     pub channel_id: Option<Uuid>,
     pub curator_bet_id: Option<Uuid>,
-    // pub title: &'a str,
-    // pub subtitle: &'a str,
-    // pub hero_image_url: &'a str,
+    pub title: &'a str,
+    pub subtitle: &'a str,
+    pub hero_image_url: &'a str,
     pub body: &'a str,
     pub curr_status: &'a str,
     pub category: &'a str,
     pub exclusivity: &'a str,
+    pub priority_order: &'a str, // change to enum
     // pub single_price: Option<BigDecimal>,
     pub price_currency: Option<&'a str>, // change to enum
-    // pub previews_count: i16,
-    pub priority_order: Option<&'a str>, // change to enum
-    // pub verified: bool,
+
+    pub previews_count: i16,
+    pub verified: bool,
     pub published_at: Option<SystemTime>,
 }
 
@@ -95,7 +96,7 @@ pub struct NewCuratorshipDto<'a> {
     pub single_price: Option<BigDecimal>,
     pub price_currency: Option<&'a str>, // change to enum
     pub previews_count: i16,
-    pub priority_order: Option<&'a str>, // change to enum
+    pub priority_order: &'a str, // change to enum
     pub verified: bool,
     pub items: Vec<NewCutarshipItemDto<'a>>,
 }
