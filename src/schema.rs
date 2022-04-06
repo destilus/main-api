@@ -50,6 +50,13 @@ table! {
         defied_curatorship_id -> Nullable<Uuid>,
         channel_id -> Nullable<Uuid>,
         curator_bet_id -> Nullable<Uuid>,
+        body -> Varchar,
+        curr_status -> Varchar,
+        category -> Varchar,
+        exclusivity -> Varchar,
+        priority_order -> Varchar,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
     }
 }
 

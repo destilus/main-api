@@ -5,7 +5,26 @@ CREATE TABLE curatorships
   defied_curatorship_id UUID NULL references curatorships(id),
   channel_id UUID NULL references channels(id),
   curator_bet_id UUID NULL references bets(id),
-  CONSTRAINT curatorships_pkey PRIMARY KEY ( id )
+  body VARCHAR(128) NOT NULL,
+  curr_status VARCHAR(32) NOT NULL,
+  category VARCHAR(32) NOT NULL,
+  exclusivity VARCHAR(32) NOT NULL,
+  priority_order VARCHAR(16) NOT NULL,
+  created_at timestamp NOT NULL DEFAULT NOW(),
+  updated_at timestamp NOT NULL DEFAULT NOW(),
+  CONSTRAINT curatorships_pkey PRIMARY KEY ( id ),
+  CONSTRAINT crt_status_check CHECK (curr_status IN (
+    'PUBLISHED', 'DRAFT', 'UNPUBLISHED'
+  )),
+  CONSTRAINT crt_category_check CHECK (category IN (
+    'NFTS','CRYPTO', 'INVESTMENT', 'PRODUCTS', 'NEWS', 'MOVIES', 'BOOKS', 'VIDEOS'
+  )),
+  CONSTRAINT crt_exclusivity_check CHECK (exclusivity IN (
+    'FREE', 'SUBSCRIPTION', 'SUBSCRIPTION_OR_SINGLE'
+  )),
+  CONSTRAINT crt_priority_order_check CHECK (priority_order IN (
+    'ASC', 'DESC' 
+  ))
 );
 
 
@@ -52,7 +71,7 @@ CREATE TABLE curatorships
 -- );
 
 
--- CREATE TRIGGER curatorships_timestamps
--- BEFORE UPDATE ON curatorships
--- FOR EACH ROW
--- EXECUTE PROCEDURE set_updated_at();
+CREATE TRIGGER curatorships_timestamps
+BEFORE UPDATE ON curatorships
+FOR EACH ROW
+EXECUTE PROCEDURE set_updated_at();
