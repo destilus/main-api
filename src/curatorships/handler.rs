@@ -76,9 +76,9 @@ pub fn create_curatorship(
         title: dto.metadata.title,
         hero_image_url: dto.metadata.hero_image,
         previews_count: dto.previews_count,
-        price_currency: dto.price_currency,
         priority_order: dto.priority_order,
-        // single_price: dto.single_price,
+        price_currency: dto.price_currency,
+        single_price: dto.single_price,
         verified: dto.verified,
         published_at: Some(SystemTime::now()),
     };

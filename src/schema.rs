@@ -59,6 +59,7 @@ table! {
         exclusivity -> Varchar,
         priority_order -> Varchar,
         price_currency -> Nullable<Varchar>,
+        single_price -> Nullable<Numeric>,
         verified -> Bool,
         previews_count -> Int2,
         published_at -> Nullable<Timestamp>,

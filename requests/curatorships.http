@@ -23,6 +23,8 @@ Content-Type: application/json
     "previews_count": 1,
     "priority_order":"ASC",
     "verified": false,
+    "single_price": 0.000123,
+    "price_currency": "ETH",
     "metadata": {
         "hero_image": "https://via.placeholder.com/150/d32776",
         "title": "2022 - Melhores Filmes",

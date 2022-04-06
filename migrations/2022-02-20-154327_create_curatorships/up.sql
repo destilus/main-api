@@ -14,6 +14,7 @@ CREATE TABLE curatorships
   exclusivity VARCHAR(32) NOT NULL,
   priority_order VARCHAR(16) NOT NULL,
   price_currency VARCHAR(128) NULL,
+  single_price NUMERIC(24, 18) NULL, -- ETH has 18 decimals
   verified BOOLEAN NOT NULL DEFAULT false,
   previews_count SMALLINT NOT NULL DEFAULT 0,
   published_at timestamp NULL,
