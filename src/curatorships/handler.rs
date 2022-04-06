@@ -13,6 +13,7 @@ use crate::curatorships::model::Post;
 use crate::curatorships::model::{NewCuratorship, NewCuratorshipDto, NewCuratorshipItem};
 
 use super::model::Curatorship;
+use std::time::SystemTime;
 
 #[get("/posts")]
 pub fn all_posts(connection: DbConn) -> Result<Json<Vec<Post>>, Status> {
@@ -35,7 +36,13 @@ pub fn create_post(
     new_post: Json<NewPost<'_>>,
 ) -> Result<status::Created<Json<Post>>, Status> {
     let data = new_post.into_inner();
-    curatorships::repository::create_post(data, &connection)
+    let post = data;
+    // let post = NewPost {
+    //     curator_id: None,
+    //     body: data.body,
+    //     title: data.title,
+    // };
+    curatorships::repository::create_post(post, &connection)
         .map(|post| post_created(post))
         .map_err(|error| error_status(error))
 }
@@ -57,23 +64,24 @@ pub fn create_curatorship(
     let curator_id_temp = Uuid::parse_str(dto.curator_id).unwrap();
     // let defied_curatorship_id_temp = Uuid::parse_str(dto.defied_curatorship_id).unwrap();
     let new_curatorship = NewCuratorship {
-        body: dto.metadata.text,
-        category: dto.category,
         channel_id: None,
         curator_bet_id: None,
         curator_id: curator_id_temp,
-        curr_status: dto.curr_status,
-        defied_curatorship_id: None,
-        exclusivity: dto.exclusivity,
-        frequency: dto.frequency,
-        hero_image_url: dto.metadata.hero_image,
-        previews_count: dto.previews_count,
-        price_currency: dto.price_currency,
-        priority_order: dto.priority_order,
-        single_price: dto.single_price,
-        subtitle: dto.metadata.subtitle.unwrap(),
-        title: dto.metadata.title,
-        verified: dto.verified,
+        defied_curatorship_id: None
+        // body: dto.metadata.text,
+        // category: dto.category,
+        // curr_status: dto.curr_status,
+        // exclusivity: dto.exclusivity,
+        // frequency: dto.frequency,
+        // hero_image_url: dto.metadata.hero_image,
+        // previews_count: dto.previews_count,
+        // price_currency: dto.price_currency,
+        // priority_order: dto.priority_order,
+        // single_price: dto.single_price,
+        // subtitle: dto.metadata.subtitle,
+        // title: dto.metadata.title,
+        // verified: dto.verified,
+        // published_at: Some(SystemTime::now()),
     };
     curatorships::repository::create_curatorship(new_curatorship, &connection)
         .map(|curatorship| curatorship_created(curatorship))

@@ -50,22 +50,6 @@ table! {
         defied_curatorship_id -> Nullable<Uuid>,
         channel_id -> Nullable<Uuid>,
         curator_bet_id -> Nullable<Uuid>,
-        title -> Varchar,
-        subtitle -> Varchar,
-        hero_image_url -> Varchar,
-        body -> Varchar,
-        curr_status -> Varchar,
-        category -> Varchar,
-        frequency -> Varchar,
-        exclusivity -> Varchar,
-        single_price -> Nullable<Numeric>,
-        price_currency -> Varchar,
-        previews_count -> Int2,
-        priority_order -> Varchar,
-        verified -> Bool,
-        published_at -> Nullable<Timestamp>,
-        created_at -> Timestamp,
-        updated_at -> Timestamp,
     }
 }
 

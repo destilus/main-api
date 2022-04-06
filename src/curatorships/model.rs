@@ -30,44 +30,45 @@ pub struct Curatorship {
     pub defied_curatorship_id: Option<Uuid>,
     pub channel_id: Option<Uuid>,
     pub curator_bet_id: Option<Uuid>,
-    pub title: String,
-    pub subtitle: String,
-    pub hero_image_url: String,
-    pub body: String,
-    pub curr_status: String,
-    pub category: String,
-    pub frequency: String,
-    pub exclusivity: String,
-    pub single_price: Option<BigDecimal>,
-    pub price_currency: String, // change to enum
-    pub previews_count: i16,
-    pub priority_order: String, // change to enum
-    pub verified: bool,
-    pub published_at: Option<SystemTime>,
-    pub created_at: SystemTime,
-    pub updated_at: SystemTime,
+    // pub title: String,
+    // pub subtitle: String,
+    // pub hero_image_url: String,
+    // pub body: String,
+    // pub curr_status: String,
+    // pub category: String,
+    // pub frequency: String,
+    // pub exclusivity: String,
+    // pub single_price: Option<BigDecimal>,
+    // pub price_currency: String, // change to enum
+    // pub previews_count: i16,
+    // pub priority_order: String, // change to enum
+    // pub verified: bool,
+    // pub published_at: Option<SystemTime>,
+    // pub created_at: SystemTime,
+    // pub updated_at: SystemTime,
 }
 
 #[derive(Insertable, Serialize, Deserialize)]
 #[table_name = "curatorships"]
-pub struct NewCuratorship<'a> {
+pub struct NewCuratorship {
     pub curator_id: Uuid,
     pub defied_curatorship_id: Option<Uuid>,
     pub channel_id: Option<Uuid>,
     pub curator_bet_id: Option<Uuid>,
-    pub title: &'a str,
-    pub subtitle: &'a str,
-    pub hero_image_url: &'a str,
-    pub body: Option<&'a str>,
-    pub curr_status: &'a str,
-    pub category: &'a str,
-    pub frequency: &'a str,
-    pub exclusivity: &'a str,
-    pub single_price: Option<BigDecimal>,
-    pub price_currency: Option<&'a str>, // change to enum
-    pub previews_count: i16,
-    pub priority_order: Option<&'a str>, // change to enum
-    pub verified: bool,
+    // pub title: &'a str,
+    // pub subtitle: &'a str,
+    // pub hero_image_url: &'a str,
+    // pub body: &'a str,
+    // pub curr_status: &'a str,
+    // pub category: &'a str,
+    // pub frequency: &'a str,
+    // pub exclusivity: &'a str,
+    // pub single_price: Option<BigDecimal>,
+    // pub price_currency: Option<&'a str>, // change to enum
+    // pub previews_count: i16,
+    // pub priority_order: Option<&'a str>, // change to enum
+    // pub verified: bool,
+    // pub published_at: Option<SystemTime>,
 }
 
 #[derive(Insertable, Serialize, Deserialize)]
@@ -112,8 +113,8 @@ pub struct NewCutarshipItemDto<'a> {
 #[derive(Serialize, Deserialize)]
 pub struct CuratorshipMetadata<'a> {
     pub title: &'a str,
-    pub subtitle: Option<&'a str>,
-    pub text: Option<&'a str>,
+    pub subtitle: &'a str,
+    pub text: &'a str,
     pub hero_image: &'a str,
 }
 

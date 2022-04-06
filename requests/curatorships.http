@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
     "category": "MOVIES",
-    "curator_id": "e19de506-71eb-4abf-a6a3-1c080ad72727",
+    "curator_id": "3d2c8c50-282c-4dea-a911-c229384bdffa",
     "curr_status": "DRAFT",
     "exclusivity":"FREE",
     "frequency": "HOUR", 
