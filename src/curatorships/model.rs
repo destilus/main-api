@@ -38,11 +38,11 @@ pub struct Curatorship {
     pub category: String,
     pub exclusivity: String,
     // pub single_price: Option<BigDecimal>,
-    // pub price_currency: String, // change to enum
+    pub price_currency: String, // change to enum
     // pub previews_count: i16,
-    pub priority_order: String, // change to enum
+    pub priority_order: Option<String>, // change to enum
     // pub verified: bool,
-    // pub published_at: Option<SystemTime>,
+    pub published_at: Option<SystemTime>,
     pub created_at: SystemTime,
     pub updated_at: SystemTime,
 }
@@ -62,11 +62,11 @@ pub struct NewCuratorship<'a> {
     pub category: &'a str,
     pub exclusivity: &'a str,
     // pub single_price: Option<BigDecimal>,
-    // pub price_currency: Option<&'a str>, // change to enum
+    pub price_currency: Option<&'a str>, // change to enum
     // pub previews_count: i16,
     pub priority_order: Option<&'a str>, // change to enum
-                                         // pub verified: bool,
-                                         // pub published_at: Option<SystemTime>,
+    // pub verified: bool,
+    pub published_at: Option<SystemTime>,
 }
 
 #[derive(Insertable, Serialize, Deserialize)]

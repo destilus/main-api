@@ -10,6 +10,8 @@ CREATE TABLE curatorships
   category VARCHAR(32) NOT NULL,
   exclusivity VARCHAR(32) NOT NULL,
   priority_order VARCHAR(16) NOT NULL,
+  price_currency VARCHAR(128) NULL,
+  published_at timestamp NULL,
   created_at timestamp NOT NULL DEFAULT NOW(),
   updated_at timestamp NOT NULL DEFAULT NOW(),
   CONSTRAINT curatorships_pkey PRIMARY KEY ( id ),
@@ -24,6 +26,9 @@ CREATE TABLE curatorships
   )),
   CONSTRAINT crt_priority_order_check CHECK (priority_order IN (
     'ASC', 'DESC' 
+  )),
+  CONSTRAINT crt_currency_check CHECK (price_currency IN (
+    'BRL', 'USD', 'USDT', 'USDC', 'BTC', 'ETH' 
   ))
 );
 

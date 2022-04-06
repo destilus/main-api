@@ -55,6 +55,8 @@ table! {
         category -> Varchar,
         exclusivity -> Varchar,
         priority_order -> Varchar,
+        price_currency -> Nullable<Varchar>,
+        published_at -> Nullable<Timestamp>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
