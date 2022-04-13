@@ -1,0 +1,14 @@
+### curator_id - johel : 3d2c8c50-282c-4dea-a911-c229384bdffa
+# @name newChannel
+POST http://localhost:8000/channels/channels
+Content-Type: application/json
+
+{
+    "owner_id": "b221a17a-6c00-4f4b-bf46-2bb17687a53d",
+    "title": "bem vindos a meu canal",
+    "summary": "Aqui vc aprende um pouco de tudo",
+    "frequency": "HOUR",
+    "exclusivity": "FREE",
+    "subscription_price": 10,
+    "price_currency": "BTC"
+}
