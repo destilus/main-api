@@ -44,6 +44,17 @@ table! {
 }
 
 table! {
+    curatorship_subscribers (id) {
+        id -> Uuid,
+        subscriber_id -> Uuid,
+        channel_id -> Uuid,
+        subscription_type -> Varchar,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
     curatorships (id) {
         id -> Uuid,
         curator_id -> Uuid,
@@ -92,6 +103,8 @@ table! {
 joinable!(bets -> users (creator_id));
 joinable!(channels -> users (owner_id));
 joinable!(curatorship_items -> curatorships (curatorship_id));
+joinable!(curatorship_subscribers -> channels (channel_id));
+joinable!(curatorship_subscribers -> users (subscriber_id));
 joinable!(curatorships -> bets (curator_bet_id));
 joinable!(curatorships -> channels (channel_id));
 joinable!(curatorships -> users (curator_id));
@@ -101,6 +114,7 @@ allow_tables_to_appear_in_same_query!(
     bets,
     channels,
     curatorship_items,
+    curatorship_subscribers,
     curatorships,
     posts,
     users,
