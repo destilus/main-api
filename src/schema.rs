@@ -47,7 +47,7 @@ table! {
     curatorship_subscribers (id) {
         id -> Uuid,
         subscriber_id -> Uuid,
-        curatorship_id -> Uuid,
+        channel_id -> Uuid,
         subscription_type -> Varchar,
         created_at -> Timestamp,
         updated_at -> Timestamp,
@@ -103,7 +103,7 @@ table! {
 joinable!(bets -> users (creator_id));
 joinable!(channels -> users (owner_id));
 joinable!(curatorship_items -> curatorships (curatorship_id));
-joinable!(curatorship_subscribers -> curatorships (curatorship_id));
+joinable!(curatorship_subscribers -> channels (channel_id));
 joinable!(curatorship_subscribers -> users (subscriber_id));
 joinable!(curatorships -> bets (curator_bet_id));
 joinable!(curatorships -> channels (channel_id));

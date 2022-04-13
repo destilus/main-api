@@ -1,7 +1,7 @@
 CREATE TABLE curatorship_subscribers (
     id UUID NOT NULL DEFAULT uuid_generate_v4(),
     subscriber_id UUID NOT NULL references users(id),
-    curatorship_id UUID NOT NULL references curatorships(id),
+    channel_id UUID NOT NULL references channels(id),
     subscription_type VARCHAR(32) NOT NULL,
     created_at timestamp NOT NULL DEFAULT NOW(),
     updated_at timestamp NOT NULL DEFAULT NOW(),
