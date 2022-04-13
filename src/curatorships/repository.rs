@@ -6,7 +6,9 @@ use diesel::prelude::*;
 use crate::curatorships::model::NewPost;
 use crate::curatorships::model::Post;
 
-use crate::curatorships::model::{Curatorship, NewCuratorship, NewCuratorshipItem};
+use crate::curatorships::model::{
+    Curatorship, CuratorshipItem, NewCuratorship, NewCuratorshipItem,
+};
 
 use crate::schema::posts;
 use crate::schema::posts::dsl::*;
@@ -33,11 +35,25 @@ pub fn count_posts(connection: &PgConnection) -> String {
 
 pub fn create_curatorship(
     new_curatorship: NewCuratorship,
-    // new_curatorship_item: NewCuratorshipItem,
+    new_curatorship_item: NewCuratorshipItem,
     conn: &PgConnection,
-) -> QueryResult<Curatorship> {
-    diesel::insert_into(curatorships::table)
+) -> QueryResult<CuratorshipItem> {
+    let curatorship_result: QueryResult<Curatorship> = diesel::insert_into(curatorships::table)
         .values(&new_curatorship)
+        .get_result(conn);
+
+    if let Err(err) = curatorship_result {
+        return QueryResult::Err(err);
+    }
+
+    let created_curatorship_id = curatorship_result.map(|item| item.id)?;
+    let item = NewCuratorshipItem {
+        curatorship_id: created_curatorship_id,
+        ..new_curatorship_item
+    };
+
+    diesel::insert_into(curatorship_items::table)
+        .values(&item)
         .get_result(conn)
 }
 

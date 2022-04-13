@@ -31,5 +31,16 @@ Content-Type: application/json
         "subtitle": "Não pode perder",
         "text" : "Na minhao opiniao os 10 melhores filmes"
     },
-    "items": []
+    "items": [
+        {
+            "external_ref": "https://via.placeholder.com/150/d32776",
+            "priority": 1,
+            "metadata": {
+                "hero_image": "https://via.placeholder.com/150/d32776",
+                "title": "2022 - Melhores Filmes",
+                "subtitle": "Não pode perder",
+                "text" : "Na minhao opiniao os 10 melhores filmes"
+            }
+        }
+    ]
 }
