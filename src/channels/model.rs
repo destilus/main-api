@@ -1,26 +1,10 @@
 #![allow(proc_macro_derive_resolution_fallback)]
 use crate::schema::channels;
-use crate::schema::posts;
 use bigdecimal::BigDecimal;
+use diesel::query_builder::AsChangeset;
 use std::time::SystemTime;
 use uuid::Uuid;
 
-#[derive(Queryable, AsChangeset, Serialize, Deserialize, Debug)]
-pub struct Post {
-    pub id: i32,
-    pub curator_id: Option<Uuid>,
-    pub title: String,
-    pub body: String,
-    pub published: bool,
-}
-
-#[derive(Insertable, Serialize, Deserialize)]
-#[table_name = "posts"]
-pub struct NewPost<'a> {
-    pub curator_id: Option<Uuid>,
-    pub title: &'a str,
-    pub body: &'a str,
-}
 
 #[derive(Queryable, AsChangeset, Serialize, Deserialize, Debug)]
 pub struct Channel {
@@ -57,4 +41,10 @@ pub struct NewChannelDto<'a> {
     pub exclusivity: &'a str,
     pub subscription_price: Option<BigDecimal>,
     pub price_currency: Option<&'a str>,
+}
+
+#[derive(AsChangeset)]
+#[table_name="channels"]
+pub struct ChannelForm<'a> {
+    pub title: &'a str,
 }

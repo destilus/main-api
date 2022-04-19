@@ -7,27 +7,25 @@ use rocket::serde::json::Json;
 use uuid::Uuid;
 
 use crate::channels;
-use crate::channels::model::NewPost;
-use crate::channels::model::Post;
 use crate::channels::model::{NewChannel, NewChannelDto};
 use crate::connection::DbConn;
 
 use super::model::Channel;
 use std::time::SystemTime;
 
-#[get("/channels")]
-pub fn all_posts(connection: DbConn) -> Result<Json<Vec<Channel>>, Status> {
-    channels::repository::show_posts(&connection)
-        .map(|post| Json(post))
+#[get("/")]
+pub fn all_channels(connection: DbConn) -> Result<Json<Vec<Channel>>, Status> {
+    channels::repository::show_channels(&connection)
+        .map(|channel| Json(channel))
         .map_err(|error| error_status(error))
 }
 
 #[get("/count")]
 pub fn count_channels(connection: DbConn) -> String {
-    channels::repository::count_posts(&connection)
+    channels::repository::count_channels(&connection)
 }
 
-#[post("/channels", format = "application/json", data = "<new_channel_dto>")]
+#[post("/", format = "application/json", data = "<new_channel_dto>")]
 pub fn create_channel(
     connection: DbConn,
     new_channel_dto: Json<NewChannelDto<'_>>,
@@ -47,24 +45,27 @@ pub fn create_channel(
         .map_err(|error| error_status(error))
 }
 
-#[get("/channels/<id>")]
-pub fn get_channel(id: i32, connection: DbConn) -> Result<Json<Post>, Status> {
-    channels::repository::get_channel(id, &connection)
+#[get("/<id>")]
+pub fn get_channel(id: &str, connection: DbConn) -> Result<Json<Channel>, Status> {
+    let channel_uuid = Uuid::parse_str(id).unwrap();
+    channels::repository::get_channel(channel_uuid, &connection)
         .map(|channel| Json(channel))
         .map_err(|error| error_status(error))
 }
 
-// todo update
-/* #[put("/posts/<id>", format = "application/json", data = "<post>")]
-pub fn update_post(id: i32, post: Json<Post>, connection: DbConn) -> Result<Json<Post>, Status> {
-    channels::repository::update_post(id, post.into_inner(), &connection)
-        .map(|post| Json(post))
-        .map_err(|error| error_status(error))
-} */
 
-#[delete("/channels/<id>")]
-pub fn delete_channel(id: i32, connection: DbConn) -> Result<status::NoContent, Status> {
-    channels::repository::delete_post(id, &connection)
+ #[put("/<id>", format = "application/json")]
+pub fn update_channel(id: &str, connection: DbConn) -> Result<Json<Channel>, Status> {
+    let channel_uuid = Uuid::parse_str(id).unwrap();
+    channels::repository::update_channel(channel_uuid, &connection)
+        .map(|channel| Json(channel))
+        .map_err(|error| error_status(error))
+} 
+
+#[delete("/<id>")]
+pub fn delete_channel(id: &str, connection: DbConn) -> Result<status::NoContent, Status> {
+    let channel_uuid = Uuid::parse_str(id).unwrap();
+    channels::repository::delete_channel(channel_uuid, &connection)
         .map(|_| status::NoContent)
         .map_err(|error| error_status(error))
 }

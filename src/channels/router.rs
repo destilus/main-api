@@ -9,13 +9,12 @@ pub async fn create_routes() {
         .mount(
             "/channels",
             routes![
-                channels::handler::all_posts,
-                channels::handler::count_posts,
+                channels::handler::all_channels,
+                channels::handler::count_channels,
                 channels::handler::create_channel,
-                channels::handler::create_post,
-                channels::handler::update_post,
-                channels::handler::get_post,
-                channels::handler::delete_post
+                channels::handler::update_channel,
+                channels::handler::get_channel,
+                channels::handler::delete_channel
             ],
         )
         .launch()
