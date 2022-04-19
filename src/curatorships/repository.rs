@@ -56,19 +56,20 @@ pub fn create_curatorship(
         ..new_curatorship_item
     };
 
-    let item_result: QueryResult<CuratorshipItem> = diesel::insert_into(curatorship_items::table)
-        .values(&item)
-        .get_result(conn);
+    let item_results: QueryResult<Vec<CuratorshipItem>> =
+        diesel::insert_into(curatorship_items::table)
+            .values(&vec![item])
+            .get_results(conn);
 
-    if let Err(err) = item_result {
+    if let Err(err) = item_results {
         return QueryResult::Err(err);
     }
 
-    let created_item = item_result.expect("Error case was already treated");
+    let created_items = item_results.expect("Error case was already treated");
 
     Ok(CompleteCuratorship {
         curatorship: created_curatorship,
-        curatorship_items: vec![created_item],
+        curatorship_items: created_items,
     })
 }
 

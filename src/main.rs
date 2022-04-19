@@ -10,9 +10,9 @@ extern crate serde_derive;
 
 use dotenv::dotenv;
 
+mod channels;
 mod connection;
 mod curatorships;
-mod channels;
 mod sample;
 mod schema;
 
@@ -20,6 +20,6 @@ mod schema;
 async fn main() {
     dotenv().ok();
     // sample::router::create_routes().await;
-    //curatorships::router::create_routes().await;
-    channels::router::create_routes().await;
+    curatorships::router::create_routes().await;
+    // channels::router::create_routes().await;
 }
