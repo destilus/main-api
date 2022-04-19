@@ -10,6 +10,7 @@ Content-Type: application/json
 
 
 ### curator_id - johel : 3d2c8c50-282c-4dea-a911-c229384bdffa
+### curator_id - gabriel: b221a17a-6c00-4f4b-bf46-2bb17687a53d
 # @name newCuratorship
 POST http://localhost:8000/curatorships/curatorships
 Content-Type: application/json
@@ -27,7 +28,7 @@ Content-Type: application/json
     "price_currency": "BTC2",
     "metadata": {
         "hero_image": "https://via.placeholder.com/150/d32776",
-        "title": "2022 - Melhores Filmes",
+        "title": "2022 - Melhores Filmes de terror",
         "subtitle": "Não pode perder",
         "text" : "Na minhao opiniao os 10 melhores filmes"
     },

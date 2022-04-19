@@ -1,0 +1,48 @@
+### curator_id - johel : 3d2c8c50-282c-4dea-a911-c229384bdffa
+# @name newChannel
+POST http://localhost:8000/channels
+Content-Type: application/json
+
+{
+    "owner_id": "b221a17a-6c00-4f4b-bf46-2bb17687a53d",
+    "title": "bem vindos a meu canal",
+    "summary": "Aqui vc aprende um pouco de tudo",
+    "frequency": "HOUR",
+    "exclusivity": "FREE",
+    "subscription_price": 10,
+    "price_currency": "BTC"
+}
+
+### get channel by Id
+###
+@addedChannelId={{newChannel.response.body.$.id}}
+GET http://localhost:8000/channels/{{addedChannelId}}
+
+### get all channels
+###
+GET http://localhost:8000/channels/
+
+### delete channel
+###
+DELETE http://localhost:8000/channels/{{addedChannelId}}
+
+### count channels
+###
+GET http://localhost:8000/channels/count
+
+### update channel
+###
+PUT http://localhost:8000/channels/8214d341-a683-4d8c-8a93-62959de25bec
+Content-Type: application/json
+
+{
+    "id": "8214d341-a683-4d8c-8a93-62959de25bec",
+    "owner_id": "b221a17a-6c00-4f4b-bf46-2bb17687a53d",
+    "title": "bem vindos a meu canal 2",
+    "summary": "Aqui vc aprende um pouco de tudo",
+    "frequency": "HOUR",
+    "exclusivity": "FREE",
+    "subscription_price": 10,
+    "price_currency": "BTC",
+    "created_at": "2022-04-19 00:33:13.115"
+}
