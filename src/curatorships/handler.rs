@@ -10,9 +10,11 @@ use crate::connection::DbConn;
 use crate::curatorships;
 use crate::curatorships::model::NewPost;
 use crate::curatorships::model::Post;
-use crate::curatorships::model::{NewCuratorship, NewCuratorshipDto, NewCuratorshipItem};
+use crate::curatorships::model::{
+    CompleteCuratorship, NewCuratorship, NewCuratorshipDto, NewCuratorshipItem,
+};
 
-use super::model::Curatorship;
+use super::model::{Curatorship, CuratorshipItem};
 use std::time::SystemTime;
 
 #[get("/posts")]
@@ -55,7 +57,7 @@ pub fn create_post(
 pub fn create_curatorship(
     connection: DbConn,
     new_curatorship_dto: Json<NewCuratorshipDto<'_>>,
-) -> Result<status::Created<Json<Curatorship>>, Status> {
+) -> Result<Json<CompleteCuratorship>, Status> {
     let dto = new_curatorship_dto.into_inner();
     // todo: unwrap somente para teste
     // Options colocados como None por enquanto
@@ -82,8 +84,27 @@ pub fn create_curatorship(
         verified: dto.verified,
         published_at: Some(SystemTime::now()),
     };
-    curatorships::repository::create_curatorship(new_curatorship, &connection)
-        .map(|curatorship| curatorship_created(curatorship))
+
+    let mut new_curatorship_items: Vec<NewCuratorshipItem> = dto
+        .items
+        .iter()
+        .map(|item| NewCuratorshipItem {
+            curatorship_id: Uuid::new_v4(),
+            priority_order: item.priority,
+            external_ref: item.external_ref,
+            title: item.metadata.title,
+            subtitle: item.metadata.subtitle,
+            hero_image_url: item.metadata.hero_image,
+            body: item.metadata.text,
+        })
+        .collect();
+
+    let first_item = new_curatorship_items
+        .pop()
+        .expect("expected at leat one item");
+
+    curatorships::repository::create_curatorship(new_curatorship, first_item, &connection)
+        .map(|complete_curatorship| Json(complete_curatorship))
         .map_err(|error| error_status(error))
 }
 
@@ -135,4 +156,17 @@ fn curatorship_created(curatorship: Curatorship) -> status::Created<Json<Curator
         id = curatorship.id
     ))
     .body(Json(curatorship))
+}
+
+fn curatorship_item_created(
+    curatorship_item: CuratorshipItem,
+) -> status::Created<Json<CuratorshipItem>> {
+    println!("here final");
+    status::Created::new(format!(
+        "{host}:{port}/curatorship-item/{id}",
+        host = "localhost",
+        port = "8000",
+        id = curatorship_item.id
+    ))
+    .body(Json(curatorship_item))
 }

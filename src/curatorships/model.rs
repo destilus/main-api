@@ -47,6 +47,26 @@ pub struct Curatorship {
     pub updated_at: SystemTime,
 }
 
+#[derive(Queryable, AsChangeset, Serialize, Deserialize, Debug)]
+pub struct CuratorshipItem {
+    pub id: Uuid,
+    pub curatorship_id: Uuid,
+    pub priority_order: i16,
+    pub external_ref: Option<String>,
+    pub title: String,
+    pub subtitle: Option<String>,
+    pub hero_image_url: Option<String>,
+    pub body: String,
+    pub created_at: SystemTime,
+    pub updated_at: SystemTime,
+}
+
+#[derive(Serialize)]
+pub struct CompleteCuratorship {
+    pub curatorship: Curatorship,
+    pub curatorship_items: Vec<CuratorshipItem>,
+}
+
 #[derive(Insertable, Serialize, Deserialize)]
 #[table_name = "curatorships"]
 pub struct NewCuratorship<'a> {
@@ -72,13 +92,13 @@ pub struct NewCuratorship<'a> {
 #[derive(Insertable, Serialize, Deserialize)]
 #[table_name = "curatorship_items"]
 pub struct NewCuratorshipItem<'a> {
-    curatorship_id: Uuid,
-    priority_order: i16,
-    external_ref: Option<&'a str>,
-    title: &'a str,
-    subtitle: Option<&'a str>,
-    hero_image_url: Option<&'a str>,
-    body: &'a str,
+    pub curatorship_id: Uuid,
+    pub priority_order: i16,
+    pub external_ref: Option<&'a str>,
+    pub title: &'a str,
+    pub subtitle: Option<&'a str>,
+    pub hero_image_url: Option<&'a str>,
+    pub body: &'a str,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -102,9 +122,8 @@ pub struct NewCuratorshipDto<'a> {
 
 #[derive(Serialize, Deserialize)]
 pub struct NewCutarshipItemDto<'a> {
-    pub title: &'a str,
-    pub external_ref: &'a str,
-    pub priority: &'a str,
+    pub external_ref: Option<&'a str>,
+    pub priority: i16,
     pub metadata: CuratorshipItemMetadata<'a>,
 }
 
@@ -120,6 +139,6 @@ pub struct CuratorshipMetadata<'a> {
 pub struct CuratorshipItemMetadata<'a> {
     pub title: &'a str,
     pub subtitle: Option<&'a str>,
-    pub text: Option<&'a str>,
-    pub hero_image: &'a str,
+    pub text: &'a str,
+    pub hero_image: Option<&'a str>,
 }
