@@ -61,6 +61,12 @@ pub struct CuratorshipItem {
     pub updated_at: SystemTime,
 }
 
+#[derive(Serialize)]
+pub struct CompleteCuratorship {
+    pub curatorship: Curatorship,
+    pub curatorship_items: Vec<CuratorshipItem>,
+}
+
 #[derive(Insertable, Serialize, Deserialize)]
 #[table_name = "curatorships"]
 pub struct NewCuratorship<'a> {

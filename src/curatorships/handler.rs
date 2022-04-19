@@ -10,7 +10,9 @@ use crate::connection::DbConn;
 use crate::curatorships;
 use crate::curatorships::model::NewPost;
 use crate::curatorships::model::Post;
-use crate::curatorships::model::{NewCuratorship, NewCuratorshipDto, NewCuratorshipItem};
+use crate::curatorships::model::{
+    CompleteCuratorship, NewCuratorship, NewCuratorshipDto, NewCuratorshipItem,
+};
 
 use super::model::{Curatorship, CuratorshipItem};
 use std::time::SystemTime;
@@ -55,7 +57,7 @@ pub fn create_post(
 pub fn create_curatorship(
     connection: DbConn,
     new_curatorship_dto: Json<NewCuratorshipDto<'_>>,
-) -> Result<status::Created<Json<CuratorshipItem>>, Status> {
+) -> Result<Json<CompleteCuratorship>, Status> {
     let dto = new_curatorship_dto.into_inner();
     // todo: unwrap somente para teste
     // Options colocados como None por enquanto
@@ -102,7 +104,7 @@ pub fn create_curatorship(
         .expect("expected at leat one item");
 
     curatorships::repository::create_curatorship(new_curatorship, first_item, &connection)
-        .map(|curatorship| curatorship_item_created(curatorship))
+        .map(|complete_curatorship| Json(complete_curatorship))
         .map_err(|error| error_status(error))
 }
 

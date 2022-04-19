@@ -7,7 +7,7 @@ use crate::curatorships::model::NewPost;
 use crate::curatorships::model::Post;
 
 use crate::curatorships::model::{
-    Curatorship, CuratorshipItem, NewCuratorship, NewCuratorshipItem,
+    CompleteCuratorship, Curatorship, CuratorshipItem, NewCuratorship, NewCuratorshipItem,
 };
 
 use crate::schema::posts;
@@ -16,6 +16,8 @@ use crate::schema::posts::dsl::*;
 use crate::schema::curatorship_items::dsl::*;
 use crate::schema::curatorships::dsl::*;
 use crate::schema::{curatorship_items, curatorships};
+
+use diesel::debug_query;
 
 pub fn show_posts(connection: &PgConnection) -> QueryResult<Vec<Post>> {
     //posts.filter(published.eq(true))
@@ -37,24 +39,37 @@ pub fn create_curatorship(
     new_curatorship: NewCuratorship,
     new_curatorship_item: NewCuratorshipItem,
     conn: &PgConnection,
-) -> QueryResult<CuratorshipItem> {
-    let curatorship_result: QueryResult<Curatorship> = diesel::insert_into(curatorships::table)
-        .values(&new_curatorship)
-        .get_result(conn);
+) -> QueryResult<CompleteCuratorship> {
+    let curatorship_query = diesel::insert_into(curatorships::table).values(&new_curatorship);
+    // let debug = debug_query(&curatorship_query);
+    // println!("The curatorship insert query: {:?}", debug);
+
+    let curatorship_result: QueryResult<Curatorship> = curatorship_query.get_result(conn);
 
     if let Err(err) = curatorship_result {
         return QueryResult::Err(err);
     }
 
-    let created_curatorship_id = curatorship_result.map(|item| item.id)?;
+    let created_curatorship = curatorship_result.expect("Error should have been treated");
     let item = NewCuratorshipItem {
-        curatorship_id: created_curatorship_id,
+        curatorship_id: created_curatorship.id,
         ..new_curatorship_item
     };
 
-    diesel::insert_into(curatorship_items::table)
+    let item_result: QueryResult<CuratorshipItem> = diesel::insert_into(curatorship_items::table)
         .values(&item)
-        .get_result(conn)
+        .get_result(conn);
+
+    if let Err(err) = item_result {
+        return QueryResult::Err(err);
+    }
+
+    let created_item = item_result.expect("Error case was already treated");
+
+    Ok(CompleteCuratorship {
+        curatorship: created_curatorship,
+        curatorship_items: vec![created_item],
+    })
 }
 
 pub fn create_post(new_post: NewPost, conn: &PgConnection) -> QueryResult<Post> {
